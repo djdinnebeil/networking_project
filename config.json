@@ -1,0 +1,11 @@
+{
+    "api_key": "test_api_key",
+    "url": "http://127.0.0.1:5000/generate",
+    "headers": {
+        "Content-Type": "application/json"
+    },
+    "payload": {
+        "prompt": "Generate a static image"
+    },
+    "filename": "generated_image_"
+}
