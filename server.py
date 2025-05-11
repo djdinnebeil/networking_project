@@ -42,5 +42,34 @@ def serve_static(filename):
 def get_image(number):
     return send_file(os.path.join(IMAGE_DIR, f'ff7_{number}.png'))
 
+@app.route('/status/<int:code>', methods=['GET', 'POST'])
+def return_status(code):
+    """
+    Demonstrates returning different HTTP status codes.
+    Accepts a status code as a URL parameter.
+    """
+    # Status codes and their corresponding messages
+    status_messages = {
+        200: "OK - Successful request.",
+        201: "Created - Resource was successfully created.",
+        204: "No Content - Request succeeded, but no content to return.",
+        400: "Bad Request - Invalid request syntax or parameters.",
+        401: "Unauthorized - Authentication is required.",
+        403: "Forbidden - You do not have permission to access this resource.",
+        404: "Not Found - Resource does not exist.",
+        500: "Internal Server Error - The server encountered an error.",
+        502: "Bad Gateway - Server received an invalid response from an upstream server.",
+        503: "Service Unavailable - Server is temporarily overloaded or down.",
+    }
+
+    # Get the message for the status code or use a generic message
+    message = status_messages.get(code, f"Custom Status - Code {code}")
+
+    # Log the status code and request method for demonstration
+    print(f"Received {request.method} request, returning status code: {code}")
+
+    # Return a JSON response with the status code and message
+    return jsonify({"status": code, "message": message}), code
+
 if __name__ == '__main__':
     app.run(host='127.0.0.1', port=5000, debug=True)
